@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import re
 from typing import List, Set, Optional
 from pathlib import Path
@@ -8,18 +5,8 @@ from loguru import logger
 
 
 class PhoneExtractor:
-    """
-    Класс для извлечения телефонных номеров из текстового файла
-    и преобразования их в единый формат.
-    """
 
     def __init__(self, file_path: Optional[str] = None):
-        """
-        Инициализация экстрактора телефонных номеров.
-        
-        Args:
-            file_path: Путь к текстовому файлу
-        """
         self.file_path = file_path
         self.text_content = ""
         
@@ -34,12 +21,6 @@ class PhoneExtractor:
         logger.info("PhoneExtractor инициализирован")
     
     def load_file(self, file_path: Optional[str] = None) -> None:
-        """
-        Загрузка содержимого текстового файла.
-        
-        Args:
-            file_path: Путь к текстовому файлу
-        """
         if file_path:
             self.file_path = file_path
             
@@ -57,25 +38,10 @@ class PhoneExtractor:
         logger.info(f"Файл загружен, размер содержимого: {len(self.text_content)} символов")
         
     def load_text(self, text: str) -> None:
-        """
-        Загрузка текста для извлечения номеров.
-        
-        Args:
-            text: Строка с текстом
-        """
         self.text_content = text
         logger.info(f"Загружен текст, размер: {len(self.text_content)} символов")
         
     def _normalize_phone(self, phone_match: re.Match) -> str:
-        """
-        Нормализация номера телефона в формат +7(YYY)XXX-XX-XX.
-        
-        Args:
-            phone_match: Найденное совпадение регулярного выражения
-            
-        Returns:
-            str: Номер телефона в формате +7(YYY)XXX-XX-XX
-        """
         phone_str = phone_match.group(0)
         
         # Удаляем все нецифровые символы
@@ -94,12 +60,6 @@ class PhoneExtractor:
         return f"+{digits_only[0]}({digits_only[1:4]}){digits_only[4:7]}-{digits_only[7:9]}-{digits_only[9:11]}"
         
     def extract_phones(self) -> List[str]:
-        """
-        Извлечение телефонных номеров из текста.
-        
-        Returns:
-            List[str]: Список уникальных номеров телефонов в формате +7(YYY)XXX-XX-XX
-        """
         if not self.text_content:
             logger.warning("Текст для извлечения номеров не загружен")
             return []
@@ -129,9 +89,6 @@ if __name__ == "__main__":
     @click.option('--log-level', type=click.Choice(['DEBUG', 'INFO', 'WARNING']), default='INFO', 
                   help='Уровень логирования')
     def main(file_path: str, log_level: str) -> None:
-        """
-        Извлечение телефонных номеров из текстового файла.
-        """
         # Настройка логирования
         logger.remove()
         logger.add(

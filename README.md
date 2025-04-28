@@ -63,6 +63,21 @@ python phone_extractor.py example.txt --log-level DEBUG
 +7(999)888-77-66
 ```
 
+## Запуск юнит-тестов
+
+Для проверки корректности работы программы можно запустить юнит-тесты, используя один из следующих способов:
+
+```bash
+# Простой запуск через стандартный модуль unittest
+python -m unittest test_phone_extractor.py
+
+# Запуск с подробным выводом
+python -m unittest discover -v
+
+# Прямой запуск файла с тестами
+python test_phone_extractor.py
+```
+
 ## Использование в качестве библиотеки
 
 ```python
